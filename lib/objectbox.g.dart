@@ -138,6 +138,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
         final notesParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 6, '');
@@ -154,11 +160,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 12);
         final object = Todo(
+          id: idParam,
           notes: notesParam,
           date: dateParam,
           isCompleted: isCompletedParam,
           imagePath: imagePathParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        );
 
         return object;
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../models/todo.dart';
 import '../../controller/todo_controller.dart';
 
@@ -25,28 +26,37 @@ class TodoTile extends StatelessWidget {
       confirmDismiss: (direction) async {
         return await showDialog(
           context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text('Confirm Delete'),
-            content: const Text('Do you want to delete this task?'),
-            actions: [
-              TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')),
-              TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Delete')),
-            ],
-          ),
+          builder:
+              (ctx) => AlertDialog(
+                title: const Text('Confirm Delete'),
+                content: const Text('Do you want to delete this task?'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(false),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(true),
+                    child: const Text('Delete'),
+                  ),
+                ],
+              ),
         );
       },
       onDismissed: (direction) {
         controller.deleteTodo(todo.id, todo.date);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Todo deleted')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Todo deleted')));
       },
       child: ListTile(
         title: Text(todo.notes, maxLines: 1, overflow: TextOverflow.ellipsis),
-        subtitle: Text(todo.date.toLocal().toString().split(' ')[0]),
+        subtitle: Text(DateFormat('dd MMM yyyy').format(todo.date)),
         trailing: IconButton(
           icon: Icon(
-            todo.isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
+            todo.isCompleted
+                ? Icons.check_circle
+                : Icons.radio_button_unchecked,
             color: todo.isCompleted ? Colors.green : null,
           ),
           onPressed: () {
@@ -57,7 +67,7 @@ class TodoTile extends StatelessWidget {
               date: todo.date,
               imagePath: todo.imagePath,
             );
-            controller.addTodo(updated);
+            controller.updateTodo(updated);
           },
         ),
         onTap: onTap,

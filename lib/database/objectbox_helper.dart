@@ -1,4 +1,3 @@
-import 'package:objectbox/objectbox.dart';
 import '../models/todo.dart';
 import '../../objectbox.g.dart';
 
@@ -16,7 +15,10 @@ class ObjectBoxHelper {
   }
 
   List<Todo> getTodosByDate(DateTime date) {
-    return todoBox.query(Todo_.date.equals(date.millisecondsSinceEpoch)).build().find();
+    return todoBox
+        .query(Todo_.date.equals(date.millisecondsSinceEpoch))
+        .build()
+        .find();
   }
 
   void addTodo(Todo todo) => todoBox.put(todo);
@@ -24,4 +26,11 @@ class ObjectBoxHelper {
   void deleteTodo(int id) => todoBox.remove(id);
 
   Todo? getTodoById(int id) => todoBox.get(id);
+  void updateTodo(Todo todo) {
+    if (todo.id != 0) {
+      todoBox.put(todo);
+    } else {
+      throw Exception('Todo must have a valid ID to update.');
+    }
+  }
 }
