@@ -1,7 +1,7 @@
 import '../models/todo.dart';
 import '../objectbox.g.dart';
-import '../repository/todo_repo.dart';
-import 'objectbox_helper.dart';
+import 'todo_repo.dart';
+import '../database/objectbox_helper.dart';
 
 class ObjectBoxTodoRepository implements TodoRepository {
   final ObjectBoxHelper helper;

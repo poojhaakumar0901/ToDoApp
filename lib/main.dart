@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'controller/todo_controller.dart';
-import 'database/objectbox_helper.dart';
-import 'database/objectbox_repo.dart';
 import 'ui/pages/calendar_page.dart';
+import 'init/app_initializer.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final objectBoxHelper = await ObjectBoxHelper.init();
-
-  final repository = ObjectBoxTodoRepository(objectBoxHelper);
-  Get.put(TodoController(repository));
-
+  await initializeApp(); 
   runApp(const MyApp());
 }
 

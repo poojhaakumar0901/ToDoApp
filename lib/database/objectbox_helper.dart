@@ -20,17 +20,4 @@ class ObjectBoxHelper {
         .build()
         .find();
   }
-
-  void addTodo(Todo todo) => todoBox.put(todo);
-
-  void deleteTodo(int id) => todoBox.remove(id);
-
-  Todo? getTodoById(int id) => todoBox.get(id);
-  void updateTodo(Todo todo) {
-    if (todo.id != 0) {
-      todoBox.put(todo);
-    } else {
-      throw Exception('Todo must have a valid ID to update.');
-    }
-  }
 }
