@@ -40,7 +40,8 @@ dependencies:
   table_calendar:
   intl:
   image_picker:
-  path: 
+  path:
+  get: 
 
 dev_dependencies:
   flutter_test:

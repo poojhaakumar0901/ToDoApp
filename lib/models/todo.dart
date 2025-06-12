@@ -2,11 +2,19 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Todo {
-  int id = 0;
-  String notes;
-  bool status;
-  DateTime date;
-  String? imagePath;
+  @Id()
+  int id;
 
-  Todo({required this.notes, required this.date, this.status = false,this.imagePath});
+  String notes;
+  bool isCompleted;
+  String? imagePath;
+  DateTime date;
+
+  Todo({
+    this.id =0,
+    required this.notes,
+    required this.date,
+    this.isCompleted = false,
+    this.imagePath,
+  });
 }
