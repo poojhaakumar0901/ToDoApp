@@ -1,62 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../controller/todo_controller.dart';
-import '../../models/todo.dart';
+import '../../controller/todo_form_controller.dart';
 
-class TodoFormPage extends StatefulWidget {
+class TodoFormPage extends StatelessWidget {
   final DateTime date;
   const TodoFormPage({super.key, required this.date});
 
   @override
-  State<TodoFormPage> createState() => _TodoFormPageState();
-}
-
-class _TodoFormPageState extends State<TodoFormPage> {
-  final _notesController = TextEditingController();
-  String? _imagePath;
-  final controller = Get.find<TodoController>();
-
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) setState(() => _imagePath = image.path);
-  }
-
-  void _submit() {
-    if (_notesController.text.isEmpty) return;
-
-    final todo = Todo(
-      notes: _notesController.text,
-      date: widget.date,
-      imagePath: _imagePath,
-    );                                                
-    controller.addTodo(todo);
-    Get.back();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final formController = Get.put(TodoFormController());
+
     return Scaffold(
       appBar: AppBar(title: const Text("Add Todo")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: Obx(() => Column(
           children: [
-            TextField(controller: _notesController, decoration: const InputDecoration(labelText: 'Notes')),
+            TextField(
+              onChanged: formController.setNotes,
+              decoration: const InputDecoration(labelText: 'Notes'),
+            ),
             const SizedBox(height: 12),
             ElevatedButton.icon(
-              onPressed: _pickImage,
+              onPressed: formController.pickImage,
               icon: const Icon(Icons.image),
-              label: const Text("Attach Image (optional)"),
+              label: Text(formController.imagePath.value.isEmpty
+                  ? "Attach Image (optional)"
+                  : "Image Attached"),
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: _submit,
+              onPressed: () => formController.submit(date),
               child: const Text("Save"),
             )
           ],
-        ),
+        )),
       ),
     );
   }

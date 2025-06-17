@@ -9,12 +9,12 @@ class ObjectBoxTodoRepository implements TodoRepository {
   ObjectBoxTodoRepository(this.helper);
 
   @override
-  void addTodo(Todo todo) {
+  Future <void> addTodo(Todo todo) async {
     helper.todoBox.put(todo);
   }
 
   @override
-  void deleteTodo(int id) {
+  Future<void> deleteTodo(int id) async {
     helper.todoBox.remove(id);
   }
 
@@ -39,7 +39,7 @@ class ObjectBoxTodoRepository implements TodoRepository {
   }
 
   @override
-  void updateTodo(Todo todo) {
+  Future<void> updateTodo(Todo todo) async {
     helper.todoBox.put(todo);
   }
 }

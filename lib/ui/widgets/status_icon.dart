@@ -20,16 +20,7 @@ class StatusToggleIcon extends StatelessWidget {
         todo.isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
         color: todo.isCompleted ? Colors.green : null,
       ),
-      onPressed: () {
-        final updated = Todo(
-          id: todo.id,
-          notes: todo.notes,
-          isCompleted: !todo.isCompleted,
-          date: todo.date,
-          imagePath: todo.imagePath,
-        );
-        controller.updateTodo(updated);
-      },
+       onPressed: () => controller.toggleTodoStatus(todo),
     );
   }
 }

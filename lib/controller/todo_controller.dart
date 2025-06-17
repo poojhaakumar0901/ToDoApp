@@ -26,12 +26,22 @@ class TodoController extends GetxController {
     return repository.getTodoById(id);
   }
 
-  void updateTodo(Todo todo) {
-    repository.updateTodo(todo);
-    int index = todos.indexWhere((t) => t.id == todo.id);
-    if (index != -1) {
-      todos[index] = todo; 
-      todos.refresh(); 
-    }
+  void updateTodo(Todo updatedTodo) {
+    repository.updateTodo(updatedTodo);
+
+    todos.value =
+        todos.map((t) => t.id == updatedTodo.id ? updatedTodo : t).toList();
+  }
+
+  void toggleTodoStatus(Todo todo) {
+    final updated = Todo(
+      id: todo.id,
+      notes: todo.notes,
+      isCompleted: !todo.isCompleted,
+      date: todo.date,
+      imagePath: todo.imagePath,
+    );
+
+    updateTodo(updated);
   }
 }

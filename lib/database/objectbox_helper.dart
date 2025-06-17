@@ -1,5 +1,5 @@
 import '../models/todo.dart';
-import '../../objectbox.g.dart';
+import '../objectbox.g.dart';
 
 class ObjectBoxHelper {
   late final Store store;
@@ -14,10 +14,5 @@ class ObjectBoxHelper {
     return ObjectBoxHelper._create(store);
   }
 
-  List<Todo> getTodosByDate(DateTime date) {
-    return todoBox
-        .query(Todo_.date.equals(date.millisecondsSinceEpoch))
-        .build()
-        .find();
-  }
+  Box<Todo> get box => todoBox;
 }
