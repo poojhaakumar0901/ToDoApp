@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 7877301377673073531),
     name: 'Todo',
-    lastPropertyId: const obx_int.IdUid(5, 6210959709750733837),
+    lastPropertyId: const obx_int.IdUid(6, 2257458565614925902),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -38,12 +38,6 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 126951751076066856),
-        name: 'status',
-        type: 1,
-        flags: 0,
-      ),
-      obx_int.ModelProperty(
         id: const obx_int.IdUid(4, 6400393782274881125),
         name: 'date',
         type: 10,
@@ -53,6 +47,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(5, 6210959709750733837),
         name: 'imagePath',
         type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 2257458565614925902),
+        name: 'isCompleted',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -105,7 +105,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [],
+    retiredPropertyUids: const [126951751076066856],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -126,39 +126,46 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final imagePathOffset = object.imagePath == null
             ? null
             : fbb.writeString(object.imagePath!);
-        fbb.startTable(6);
+        fbb.startTable(7);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, notesOffset);
-        fbb.addBool(2, object.status);
         fbb.addInt64(3, object.date.millisecondsSinceEpoch);
         fbb.addOffset(4, imagePathOffset);
+        fbb.addBool(5, object.isCompleted);
         fbb.finish(fbb.endTable());
         return object.id;
       },
       objectFromFB: (obx.Store store, ByteData fbData) {
         final buffer = fb.BufferContext(fbData);
         final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
         final notesParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 6, '');
         final dateParam = DateTime.fromMillisecondsSinceEpoch(
           const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0),
         );
-        final statusParam = const fb.BoolReader().vTableGet(
+        final isCompletedParam = const fb.BoolReader().vTableGet(
           buffer,
           rootOffset,
-          8,
+          14,
           false,
         );
         final imagePathParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 12);
         final object = Todo(
+          id: idParam,
           notes: notesParam,
           date: dateParam,
-          status: statusParam,
+          isCompleted: isCompletedParam,
           imagePath: imagePathParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        );
 
         return object;
       },
@@ -178,16 +185,16 @@ class Todo_ {
     _entities[0].properties[1],
   );
 
-  /// See [Todo.status].
-  static final status = obx.QueryBooleanProperty<Todo>(
-    _entities[0].properties[2],
-  );
-
   /// See [Todo.date].
-  static final date = obx.QueryDateProperty<Todo>(_entities[0].properties[3]);
+  static final date = obx.QueryDateProperty<Todo>(_entities[0].properties[2]);
 
   /// See [Todo.imagePath].
   static final imagePath = obx.QueryStringProperty<Todo>(
+    _entities[0].properties[3],
+  );
+
+  /// See [Todo.isCompleted].
+  static final isCompleted = obx.QueryBooleanProperty<Todo>(
     _entities[0].properties[4],
   );
 }

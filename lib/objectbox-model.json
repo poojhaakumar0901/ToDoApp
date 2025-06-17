@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7877301377673073531",
-      "lastPropertyId": "5:6210959709750733837",
+      "lastPropertyId": "6:2257458565614925902",
       "name": "Todo",
       "properties": [
         {
@@ -20,11 +20,6 @@
           "type": 9
         },
         {
-          "id": "3:126951751076066856",
-          "name": "status",
-          "type": 1
-        },
-        {
           "id": "4:6400393782274881125",
           "name": "date",
           "type": 10
@@ -33,6 +28,11 @@
           "id": "5:6210959709750733837",
           "name": "imagePath",
           "type": 9
+        },
+        {
+          "id": "6:2257458565614925902",
+          "name": "isCompleted",
+          "type": 1
         }
       ],
       "relations": []
@@ -46,7 +46,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    126951751076066856
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
